@@ -1,0 +1,50 @@
+{
+  "receivers": [
+    {
+      "id": "DE-HH-GS-19210",
+      "name": "Hamburg 19210 - DE-HH-GS-019210",
+      "hosts": [
+        {
+          "hostname": "localhost",
+          "port": "19210"
+        },
+        {
+          "hostname": "localhost",
+          "port": "1111"
+        }
+      ],
+      "receiverType": {
+        "name": "Stationen",
+        "category": "STATION"
+      }
+    },
+    {
+      "id": "DE-HH-GS-1112",
+      "name": "Hamburg 2 - DE-HH-GS-1112",
+      "hosts": [
+        {
+          "hostname": "localhost",
+          "port": "1112"
+        }
+      ],
+      "receiverType": {
+        "name": "Stationen",
+        "category": "STATION"
+      }
+    },
+    {
+      "id": "DE-BY-GS-3331",
+      "name": "Bayern München 1 - DE-BY-GS-3331",
+      "hosts": [
+        {
+          "hostname": "localhost",
+          "port": "3331"
+        }
+      ],
+      "receiverType": {
+        "name": "Stationen",
+        "category": "STATION"
+      }
+    }
+  ]
+}
