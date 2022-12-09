@@ -3,69 +3,56 @@
     <div class="col-md-8">
       <div class="input-group mb-3">
         <input
-          type="text"
-          class="form-control"
-          placeholder="Search by ID"
-          v-model="searchQuery"
+            type="text"
+            class="form-control"
+            placeholder="Search by ID"
+            v-model="searchQuery"
         />
         <div class="input-group-append">
           <button
-            class="btn btn-outline-secondary"
-            type="button"
-            @click="searchTitle"
+              class="btn btn-outline-secondary"
+              type="button"
+              @click="searchTitle"
           >
             Search
           </button>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-12">
       <h4>Station List</h4>
-      <ul class="list-group">
-        <li
-          class="list-group-item"
-          :class="{ active: index == currentIndex }"
-          v-for="(station, index) in stations"
-          :key="index"
-          @click="setActiveStation(station, index)"
-        >
-          {{ station.title }}
-        </li>
-      </ul>
+
+      <div class="container" v-for="(station, index) in stations" :key="index" style="border: 1px solid black">
+
+        <div class="row">
+          <div class="col-md-3">
+            {{ station.id }}
+          </div>
+
+          <div class="col-md-3">
+            {{ station.name }}
+          </div>
+
+          <div class="col-md-6">
+            Hosts:
+              <li v-for="(host) in station.hosts" :key="host.port">
+                <span>http://{{ host.hostname }}:{{ host.port }}</span>
+              </li>
+          </div>
 
 
-    </div>
-    <div class="col-md-6">
-      <div v-if="currentStation.id">
-        <h4>Station</h4>
-        <div>
-          <label><strong>ID:</strong></label> {{ currentStation.id }}
-        </div>
-        <div>
-          <label><strong>Name:</strong></label>
-          {{ currentStation.name }}
-        </div>
-        <div>
-          <label><strong>Hosts:</strong></label>
-          {{ currentStation.hosts.size() > 0 ? "Published" : "Pending" }}
         </div>
 
-        <router-link
-          :to="'/stations/' + currentStation.id"
-          class="badge badge-warning"
-          >Edit</router-link
-        >
-      </div>
-      <div v-else>
-        <br />
-        <p>Station anklicken</p>
+
       </div>
     </div>
+
+
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
 import StationDataService from "@/services/StationDataService";
 import ResponseData from "@/types/ResponseData";
 import {Station} from "@/types/StationType";
@@ -83,13 +70,14 @@ export default defineComponent({
   methods: {
     retrieveStations() {
       StationDataService.getAll()
-        .then((response: ResponseData) => {
-          this.stations = response.data.receivers;
-          console.log(response);
-        })
-        .catch((e: Error) => {
-          console.log(e);
-        });
+          .then((response: ResponseData) => {
+            this.stations = response.data.receivers;
+
+            console.log(response);
+          })
+          .catch((e: Error) => {
+            console.log(e);
+          });
     },
 
     refreshList() {
@@ -106,14 +94,14 @@ export default defineComponent({
 
     searchTitle() {
       StationDataService.findByTitle(this.searchQuery)
-        .then((response: ResponseData) => {
-          this.stations = response.data;
-          this.setActiveStation({} as Station);
-          console.log(response.data);
-        })
-        .catch((e: Error) => {
-          console.log(e);
-        });
+          .then((response: ResponseData) => {
+            this.stations = response.data;
+            this.setActiveStation({} as Station);
+            console.log(response.data);
+          })
+          .catch((e: Error) => {
+            console.log(e);
+          });
     },
   },
   mounted() {

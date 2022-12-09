@@ -2,7 +2,7 @@
   "receivers": [
     {
       "id": "DE-HH-GS-19210",
-      "name": "Hamburg 19210 - DE-HH-GS-019210",
+      "name": "Hamburg 19210",
       "hosts": [
         {
           "hostname": "localhost",
@@ -20,7 +20,7 @@
     },
     {
       "id": "DE-HH-GS-1112",
-      "name": "Hamburg 2 - DE-HH-GS-1112",
+      "name": "Hamburg 2",
       "hosts": [
         {
           "hostname": "localhost",
@@ -34,7 +34,7 @@
     },
     {
       "id": "DE-BY-GS-3331",
-      "name": "Bayern München 1 - DE-BY-GS-3331",
+      "name": "Bayern München 1",
       "hosts": [
         {
           "hostname": "localhost",
