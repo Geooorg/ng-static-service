@@ -16,53 +16,56 @@
       <router-view/>
     </div>
   </div>
+
+  <div id="messages">
+    <div v-if="messages.length">
+      <p>Result from API: ({{ messages.length }})</p>
+      <p v-for="(message, index) in messages" v-bind:key="index">{{ index }} - {{ message }}</p>
+    </div>
+  </div>
 </template>
 
-<script lang="ts">
+
+<script>
 import {defineComponent} from "vue"
-// import { connect } from "nats"
-import {WebSocketService} from "@/services/WebSocketService"
+import {connect, StringCodec} from 'nats.ws/nats.cjs'
 
 export default defineComponent({
   name: "App",
 
   data() {
     return {
-      connection: {} as WebSocket,
-      wss: {} as WebSocketService
+      messages: [],
+      connection: undefined,
+      status: undefined,
+      server: 'ws://127.0.0.1:4444',
+      subject: "warningMessage.received.sender-service.central",
     }
   },
+  created() {
+    void this.connectToNATS();
+  },
+  methods: {
+    connectToNATS: async function () {
+      const nc = await connect({servers: this.server})
+      console.log(nc.status())
+      const sc = StringCodec()
+      const sub = nc.subscribe(this.subject)
 
-  methods: {},
+      void await (async () => {
+        for await (const m of sub) {
+          this.messages.push(sc.decode(m.data))
+          console.log(`[${sub.getProcessed()}]: ${sc.decode(m.data)}`)
+        }
+        console.log("subscription closed")
+      })()
+    },
+
+  },
 
   mounted() {
-
-    // const servers = [
-    //   { servers: "localhost:4222" },
-    // ];
-    // servers.forEach(async (v) => {
-    //   try {
-    //     const nc = await connect(v);
-    //     console.log(`connected to ${nc.getServer()}`);
-    //     // this promise indicates the client closed
-    //     const done = nc.closed();
-    //     // do something with the connection
-    //
-    //     // close the connection
-    //     await nc.close();
-    //     // check if the close was OK
-    //     const err = await done;
-    //     if (err) {
-    //       console.log(`error closing:`, err);
-    //     }
-    //   } catch (err) {
-    //     console.log(`error connecting to ${JSON.stringify(v)}`);
-    //   }
-    // });
-
-
-    this.connection = new WebSocket("ws://localhost:4444")
-    this.wss = new WebSocketService(this.connection)
+    // this.connection = new WebSocket("ws://localhost:4444")
+    // this.wss = new WebSocketService(this.connection)
   },
 });
 </script>
