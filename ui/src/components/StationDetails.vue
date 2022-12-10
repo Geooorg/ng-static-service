@@ -84,46 +84,7 @@ export default defineComponent({
         });
     },
 
-    // updatePublished(status: boolean) {
-    //   let data = {
-    //     id: this.currentStation.id,
-    //     title: this.currentStation.title,
-    //     description: this.currentStation.description,
-    //     published: status,
-    //   };
-    //
-    //   StationDataService.update(this.currentStation.id, data)
-    //     .then((response: ResponseData) => {
-    //       console.log(response.data);
-    //       this.currentStation.published = status;
-    //       this.message = "The status was updated successfully!";
-    //     })
-    //     .catch((e: Error) => {
-    //       console.log(e);
-    //     });
-    // },
 
-    // updateTutorial() {
-    //   StationDataService.update(this.currentStation.id, this.currentStation)
-    //     .then((response: ResponseData) => {
-    //       console.log(response.data);
-    //       this.message = "The tutorial was updated successfully!";
-    //     })
-    //     .catch((e: Error) => {
-    //       console.log(e);
-    //     });
-    // },
-    //
-    // deleteTutorial() {
-    //   StationDataService.delete(this.currentStation.id)
-    //     .then((response: ResponseData) => {
-    //       console.log(response.data);
-    //       this.$router.push({ name: "tutorials" });
-    //     })
-    //     .catch((e: Error) => {
-    //       console.log(e);
-    //     });
-    // },
   },
   mounted() {
     this.message = "";

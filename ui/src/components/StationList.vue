@@ -93,6 +93,7 @@ export default defineComponent({
 
 
     searchTitle() {
+
       StationDataService.findByTitle(this.searchQuery)
           .then((response: ResponseData) => {
             this.stations = response.data;
