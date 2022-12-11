@@ -42,20 +42,20 @@ export default defineComponent({
       subject: "warningMessage.received.sender-service.central",
     }
   },
-  created() {
-    void this.connectToNATS();
-  },
+  // created() {
+  //   void this.connectToNATS();
+  // },
   methods: {
     connectToNATS: async function () {
       const nc = await connect({servers: this.server})
       console.log(nc.status())
       const sc = StringCodec()
-      const sub = nc.subscribe(this.subject)
+      const subscription = nc.subscribe(this.subject)
 
       void await (async () => {
-        for await (const m of sub) {
-          this.messages.push(sc.decode(m.data))
-          console.log(`[${sub.getProcessed()}]: ${sc.decode(m.data)}`)
+        for await (const msg of subscription) {
+          this.messages.push(sc.decode(msg.data))
+          console.log(`[${subscription.getProcessed()}]: ${sc.decode(msg.data)}`)
         }
         console.log("subscription closed")
       })()
@@ -64,8 +64,8 @@ export default defineComponent({
   },
 
   mounted() {
-    // this.connection = new WebSocket("ws://localhost:4444")
-    // this.wss = new WebSocketService(this.connection)
-  },
-});
+    console.log("App mounted")
+    this.connectToNATS()
+  }
+})
 </script>
